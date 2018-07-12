@@ -29,25 +29,10 @@ app.post('/api/posts', (req, res, next) => {
 })
 
 app.get('/api/posts', (req, res, next) => {
-  const dummyPosts = [
-    {
-      id: 'dfif2io3jr3n2ur',
-      title: 'My first dummy post',
-      content: 'Blá blá blá'
-    },
-    {
-      id: 'ashf2io3jr3n2ur',
-      title: 'My second dummy post',
-      content: 'Blé blé blé'
-    },
-    {
-      id: 'htyf2io3jr3n2ur',
-      title: 'My third dummy post',
-      content: 'Blí blí blí'
-    }
-  ]
-
-  res.status(200).json(dummyPosts)
+  Post.find()
+    .then(documents => {
+      res.status(200).json(documents)
+    })
 })
 
 module.exports = app
