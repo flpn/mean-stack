@@ -39,6 +39,7 @@ export class PostService {
 
     this.http.post<Post>('http://localhost:3000/api/posts', post)
       .subscribe(newPost => {
+        console.log(newPost);
         this.posts.push(newPost);
         this.postsUpdated.next([...this.posts]);
       });

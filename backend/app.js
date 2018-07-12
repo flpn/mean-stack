@@ -15,6 +15,13 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+app.get('/api/posts', (req, res, next) => {
+  Post.find()
+    .then(documents => {
+      res.status(200).json(documents)
+    })
+})
+
 app.post('/api/posts', (req, res, next) => {
   const post = new Post({
     title: req.body.title,
@@ -23,14 +30,11 @@ app.post('/api/posts', (req, res, next) => {
 
   post.save()
     .then((doc) => {
-      res.status(201).json(doc)
-    })
-})
-
-app.get('/api/posts', (req, res, next) => {
-  Post.find()
-    .then(documents => {
-      res.status(200).json(documents)
+      res.status(201).json({
+        id: doc._id,
+        title: doc.title,
+        content: doc.content
+      })
     })
 })
 
