@@ -23,7 +23,6 @@ app.post('/api/posts', (req, res, next) => {
 
   post.save()
     .then((doc) => {
-      console.log(doc)
       res.status(201).json(doc)
     })
 })
@@ -32,6 +31,13 @@ app.get('/api/posts', (req, res, next) => {
   Post.find()
     .then(documents => {
       res.status(200).json(documents)
+    })
+})
+
+app.delete('/api/posts/:id', (req, res, next) => {
+  Post.deleteOne({ _id: req.params.id })
+    .then(result => {
+      res.status(200).json(result)
     })
 })
 
