@@ -14,24 +14,26 @@ import { Post } from '../../../models/post.model';
 export class PostCreateComponent implements OnInit {
   private mode: string;
   post: Post;
-  titleInput: string;
-  contentInput: string;
+  isLoading: Boolean;
 
   constructor(public postService: PostService, public activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.titleInput = '';
-    this.contentInput = '';
     this. mode = 'create';
+    this.isLoading = false;
 
     this.activatedRoute.paramMap
-      .subscribe((paramMap) => {
-        if (paramMap.has('postId')) {
-          this.mode = 'edit';
-          const id = paramMap.get('postId');
+    .subscribe((paramMap) => {
+      if (paramMap.has('postId')) {
+        this.mode = 'edit';
+        const id = paramMap.get('postId');
 
+          this.isLoading = true;
           this.postService.getPost(id)
-            .subscribe(post => this.post = post);
+            .subscribe(post => {
+              this.post = post;
+              this.isLoading = false;
+            });
 
         }
       });
@@ -42,6 +44,7 @@ export class PostCreateComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
     const title = postForm.value.title;
     const content = postForm.value.content;
 
