@@ -6,6 +6,8 @@ import { PostService } from '../../../services/post.service';
 
 import { Post } from '../../../models/post.model';
 
+import { mimeTypeValidator } from '../../../utils/mime-type.validator';
+
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
@@ -27,7 +29,7 @@ export class PostCreateComponent implements OnInit {
     this.form = new FormGroup({
       'title': new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
       'content': new FormControl(null, {validators: [Validators.required]}),
-      'image': new FormControl(null, {validators: [Validators.required]})
+      'image': new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeTypeValidator]})
     });
 
     this.activatedRoute.paramMap
