@@ -21,7 +21,8 @@ export class PostService {
           return {
             id: post._id,
             title: post.title,
-            content: post.content
+            content: post.content,
+            imagePath: post.imagePath
           };
         });
       }))
@@ -40,7 +41,6 @@ export class PostService {
   }
 
   addPost(title: string, content: string, image: File) {
-    const post: Post = { id: null, title: title, content: content };
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
@@ -61,6 +61,7 @@ export class PostService {
       id: id,
       title: title,
       content: content,
+      imagePath: null
     };
 
     this.http.put(`http://localhost:3000/api/posts/${id}`, post)

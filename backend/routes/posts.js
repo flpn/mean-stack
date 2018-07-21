@@ -54,9 +54,12 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('', multer({ storage: storage }).single('image'), (req, res, next) => {
+  const url = `${req.protocol}://${req.get('host')}`
+console.log(req.file)
   const post = new Post({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    imagePath: `${url}/images/${req.file.filename}`
   })
 
   post.save()
@@ -64,7 +67,8 @@ router.post('', multer({ storage: storage }).single('image'), (req, res, next) =
       res.status(201).json({
         id: doc._id,
         title: doc.title,
-        content: doc.content
+        content: doc.content,
+        imagePath: doc.imagePath
       })
     })
 })
