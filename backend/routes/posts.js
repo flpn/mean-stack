@@ -12,7 +12,7 @@ const MIME_TYPE_MAP = {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype]
-    const error = new Error('Invalid mime type')
+    let error = new Error('Invalid mime type')
 
     if (isValid) {
       error = null
@@ -53,7 +53,7 @@ router.get('/:id', (req, res, next) => {
     })
 })
 
-router.post('', multer(storage).single('image'), (req, res, next) => {
+router.post('', multer({ storage: storage }).single('image'), (req, res, next) => {
   const post = new Post({
     title: req.body.title,
     content: req.body.content
