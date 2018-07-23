@@ -32,7 +32,7 @@ const router = express.Router()
 
 router.get('', (req, res, next) => {
   const pageSize = +req.query.pageSize
-  const currentPage = +req.query.page
+  const currentPage = +req.query.currentPage
   const postQuery = Post.find()
 
   if (pageSize && currentPage) {
