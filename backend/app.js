@@ -9,7 +9,7 @@ const userRouter = require('./routes/user')
 
 const app = express()
 
-mongoose.connect('mongodb+srv://flpncc:QBuwywAAqlchWKqu@cluster0-vnxki.mongodb.net/mean-tutorial?retryWrites=true')
+mongoose.connect('mongodb+srv://flpncc:QBuwywAAqlchWKqu@cluster0-vnxki.mongodb.net/mean-tutorial')
   .then(() => console.log('Connected to the database!'))
   .catch((err) => console.log('Connection failed!'))
 
