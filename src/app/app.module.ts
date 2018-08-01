@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // tslint:disable-next-line:max-line-length
 import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,
   MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -15,6 +15,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { PostListComponent } from './components/posts/post-list/post-list.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
+
+import { AuthInterceptor } from './utils/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import { SignupComponent } from './components/auth/signup/signup.component';
     MatPaginatorModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
