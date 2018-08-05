@@ -9,6 +9,7 @@ import { AuthData } from '../models/auth-data.model';
   providedIn: 'root'
 })
 export class AuthService {
+  private isAuthenticaded = false;
   private token: string;
   private authStatus: Subject<boolean> = new Subject<boolean>();
 
@@ -35,7 +36,11 @@ export class AuthService {
     this.http.post<{token: string}>('http://localhost:3000/api/user/login', authData)
       .subscribe(response => {
         this.token = response.token;
-        this.authStatus.next(true);
+
+        if (this.token) {
+          this.isAuthenticaded = true;
+          this.authStatus.next(true);
+        }
       });
   }
 
@@ -45,5 +50,9 @@ export class AuthService {
 
   getAuthStatusListener() {
     return this.authStatus.asObservable();
+  }
+
+  getIsAuthenticated() {
+    return this.isAuthenticaded;
   }
 }
