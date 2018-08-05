@@ -10,7 +10,7 @@
 
     <li *ngIf="!isAuthenticaded"><a mat-button routerLink="/signup" routerLinkActive="mat-accent">Signup</a></li>
 
-    <li *ngIf="isAuthenticaded"><button mat-button>Logout</button></li>
+    <li *ngIf="isAuthenticaded"><button (click)="onLogout()" mat-button>Logout</button></li>
   </ul>
 
 </mat-toolbar>

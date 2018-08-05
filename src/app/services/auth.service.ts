@@ -44,6 +44,12 @@ export class AuthService {
       });
   }
 
+  logout() {
+    this.token = null;
+    this.isAuthenticaded = false;
+    this.authStatus.next(false);
+  }
+
   getToken() {
     return this.token;
   }
