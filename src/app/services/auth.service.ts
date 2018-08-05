@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 
@@ -13,7 +14,7 @@ export class AuthService {
   private token: string;
   private authStatus: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   createUser(email: string, password: string) {
     const authData: AuthData = {
@@ -22,9 +23,7 @@ export class AuthService {
     };
 
     this.http.post('http://localhost:3000/api/user/signup', authData)
-      .subscribe(newUser => {
-        console.log(newUser);
-      });
+      .subscribe(newUser => {});
   }
 
   login(email: string, password: string) {
@@ -40,6 +39,7 @@ export class AuthService {
         if (this.token) {
           this.isAuthenticaded = true;
           this.authStatus.next(true);
+          this.router.navigate(['/']);
         }
       });
   }
@@ -48,6 +48,8 @@ export class AuthService {
     this.token = null;
     this.isAuthenticaded = false;
     this.authStatus.next(false);
+
+    this.router.navigate(['/']);
   }
 
   getToken() {
