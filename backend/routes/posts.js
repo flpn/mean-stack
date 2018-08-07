@@ -110,16 +110,24 @@ router.put('/:id', checkAuth,multer({ storage: storage }).single('image'), (req,
     imagePath: imagePath
   })
 
-  Post.updateOne({ _id: req.params.id }, post)
+  Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
     .then(result => {
-      res.status(200).json(result)
+      if (result.nModified > 0) {
+        res.status(200).json({ message: 'Update successful' })
+      } else {
+        res.status(401).json({ message: 'Not authorized!' })
+      }
     })
 })
 
 router.delete('/:id', checkAuth, (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id })
+  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId })
     .then(result => {
-      res.status(200).json(result)
+      if (result.n > 0) {
+        res.status(200).json({ message: 'Deletion successful' })
+      } else {
+        res.status(401).json({ message: 'Not authorized!' })
+      }
     })
 })
 
